@@ -1,0 +1,63 @@
+# Data-bearing file types are ignored by default and the files that ship are
+# re-included by name below. Fitted chains are never committed: each one stores a
+# copy of its input data array.
+#
+# Check before pushing:
+#   git ls-files | grep -E '\.(rds|csv|tsv|xlsx|dta|sav|parquet)$'
+# Expect the 48 synthetic arrays, synthetic_truth.rds, the two prior summaries and
+# the two cohort CSVs. Anything else is a mistake.
+
+*.rds
+*.csv
+*.tsv
+*.xlsx
+*.xls
+*.dta
+*.sav
+*.parquet
+*.feather
+*.fst
+*.h5
+*.sqlite
+*.db
+
+# Synthetic datasets. The character class matches the scenario families only, so
+# it cannot pick up an array for one of the variants.
+!data/data_array_vl_[A-FM-R][0-3]_N.rds
+!data/synthetic_truth.rds
+
+# Prior mean/sd and covariance read by the main model: a few hundred bytes each.
+!longitudinal_fits/long_post_6.rds
+!longitudinal_fits/long_cov_6.rds
+
+# The two cohort datasets, by exact filename.
+!data/ct_data_clean.csv
+!data/20210920_ATACCC_L.csv
+
+# Fitted output. Stan fits are also ~250 MB each and regenerable.
+outputs/
+logs/
+longitudinal_fits/long_fit_*.rds
+longitudinal_fits/longitudinal_fit_*.rds
+
+# Generated figures.
+figures/
+images/
+
+# R artefacts. .RData especially: a saved workspace can hold an entire data array.
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+*.Rproj
+Rplots.pdf
+
+# Compiled objects from Rcpp::sourceCpp
+*.o
+*.so
+*.dll
+*.dylib
+
+.DS_Store
+Thumbs.db

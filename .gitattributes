@@ -1,0 +1,16 @@
+# Normalise text to LF in the repository, check out native on each platform.
+* text=auto
+
+# Explicitly binary. Git's heuristic already treats these as binary, but an .rds is a
+# gzipped serialisation and any line-ending conversion applied to one would corrupt it
+# silently -- the file would still load, with different numbers in it.
+*.rds binary
+*.png binary
+*.pdf binary
+
+# Keep these LF regardless of platform: R and Stan are happy either way, but a reviewer
+# diffing the repository should not see whole-file changes from line endings alone.
+*.R    text eol=lf
+*.cpp  text eol=lf
+*.stan text eol=lf
+*.md   text eol=lf
